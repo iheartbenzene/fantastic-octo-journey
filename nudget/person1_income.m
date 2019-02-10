@@ -9,7 +9,6 @@ a = sum(hours);
 
 %set hourly rate
 rates = load('hourly_rate.txt');
-% rate = [zeros(size(rates)), rates];
 
 %load deductions
 deduction = load('deductions.txt');
@@ -23,13 +22,11 @@ proj_ann_income = avg_work_hours_year * rates;
 proj_ann_income = proj_ann_income - 0.22 * proj_ann_income
 
 %compute net income
-% net_income0 = (gross_income0 - (0.22 * gross_income0));
 net_income1 = total_gross_income - 0.22 * total_gross_income;
 
 %compute remaining income
 data = load('bills_1.txt');
 expenses = sum(data);
-% rem_income0 = net_income0 - 247 - 165.69;
 rem_income = net_income1 - expenses
 
 %compute annual income remaining
