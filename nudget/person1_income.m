@@ -47,16 +47,18 @@ rem_income = net_income1 - expenses
 %compute annual income remaining
 rem_ann_income = proj_ann_income - rem_income
 
+i = [1:length(bills_1)]';
+m = sum((i .- mean(i)) .* bills_1) / sum((i .- mean(i)) .^ 2);
+c = mean(bills_1) - m * mean(i);
+
 % Disparity
-% TODO turn into a linear regression thing
 despare_ity = (proj_ann_income - rem_income) / proj_ann_income
 
 % plotData
 hold on;
- i = [1:length(bills_1)]';
-% use normalized plot if bills_1 has strong variance.
-% would normally imply an if statement but no threshold for "strong"
-% bills_norm = bills_1 ./ sqrt((bills_1 .- mean(bills_1)).^2);
- plot(i, bills_1, 'ro', 'MarkerSize', 10);
+ plot(m * i + c);
+ plot(i, bills_1, 'rx', 'MarkerSize', 5);
  plot(i, bills_1);
+ xlabel('day number');
+ ylabel('amount spent per day');
 hold off;
