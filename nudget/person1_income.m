@@ -1,9 +1,11 @@
 clear; clc; close all;
+format short
 
 avg_work_hours_year = 40 * 52;
 
 % load work_hours.txt
 hours = load('work_hours.txt');
+hr_per_week = load('work_week.txt');
 
 %set initial working hours
 % A = [zeros(size(hours)), hours];
@@ -20,13 +22,24 @@ deduction = load('deductions.txt');
 % set an initial value to match most recent paycheck
 % gross_income_initial = rates * 2 * (5*unique(hours(2,:))); 
 
+% sum(hours == 8) returns the number of occurrences of 8
+% mod(length(hours), 8) returns the length of hours modded by 8
+
 % scaled income to show the available funds
 % as a value which is lagging behind by a week
-if gcd(21, length(hours)) == 21,
-  total_gross_income = rates * (2 * (5*unique(hours(2,1))) + (a-5*unique(hours(2,1))));
-else,
-  total_gross_income = rates * 2 * (5*unique(hours(2,1)));
-endif
+
+wage = (hours + hr_per_week) .* rates;
+
+total_gross_income = sum(wage) - 40 * rates;
+
+%wages = 2 * (5*unique(hours(2,1))
+%if gcd(21, length(hours)) >= 21,
+%  total_gross_income = rates * (2 * (5*unique(hours(2,1))) + (a-5*unique(hours(2,1))));
+%  save wages.txt total_gross_income;
+%else,
+%  wages = load('wages.txt');
+%  total_gross_income = rates * 2 * (5*unique(hours(2,1))) + sum(wages);
+%endif
 
 % possible comparison to display for the total span of 120 hours worked
 % before being paid for prior 80 via bi-weekly pay periods
@@ -56,4 +69,14 @@ rem_income = net_income1 - expenses
 rem_ann_income = proj_ann_income - rem_income
 
 % Disparity
-disparity = (proj_ann_income - rem_income) / proj_ann_income
+despare_ity = (proj_ann_income - rem_income) / proj_ann_income
+
+% plotData
+hold on;
+ i = [1:length(bills_1)]';
+% use normalized plot if bills_1 has strong variance.
+% would normally imply an if statement but no threshold for "strong"
+% bills_norm = bills_1 ./ sqrt((bills_1 .- mean(bills_1)).^2);
+ plot(i, bills_1, 'ro', 'MarkerSize', 10);
+ plot(i, bills_1);
+hold off;
