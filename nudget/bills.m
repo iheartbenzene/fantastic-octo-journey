@@ -1,1 +1,0 @@
-data = load('bills_1.txt');
