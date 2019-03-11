@@ -2,7 +2,7 @@
 
 A small budget idea with which I am toying.
 
-Essentially, I want a budget that will update itself with how much I could be expected to spend over the course of the next pay period. I also want it to update my pay periods automatically with each new instance of gained wages. Then I want it to group common spending locations by geographic location...but that's a long way off. 
+Essentially, this started because I wanted a budget that would update itself with how much I could be expected to spend over the course of the next pay period. I also wanted it to update my pay periods automatically with each new instance of gained wages; all of this while telling me what my most/least expensive spending points were. Then I want it to group common spending locations by geographic location...but that's a long way off. 
 
 However, if you've read this far then, the files are written in GNU Octave but are also readable by Matlab.
 
