@@ -1,4 +1,4 @@
-# fantastic-octo-journey
+# The Intelligent Budget
 
 An intelligent budget.
 
