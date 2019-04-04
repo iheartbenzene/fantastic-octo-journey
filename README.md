@@ -1,10 +1,15 @@
 # fantastic-octo-journey
 
-A small budget idea with which I am toying.
+An intelligent budget.
 
-Essentially, this started because I wanted a budget that would update itself with how much I could be expected to spend over the course of the next pay period. I also wanted it to update my pay periods automatically with each new instance of gained wages; all of this while telling me what my most/least expensive spending points were. Then I want it to group common spending locations by geographic location...but that's a long way off. 
+An intelligent budget that would update itself with possible expected increases or decreased on recurring expenses on over the course of the next pay period. 
 
-However, if you've read this far then, the files are written in GNU Octave but are also readable by Matlab.
+In prorgress:
++ Update my pay periods automatically with each new instance of gained wages. 
++ Detail the my most/least expensive spending points. 
++ Group common spending locations by geographic location.
+
+The current prototype files are written in GNU Octave but are also readable by Matlab.
 
 To acquire GNU Octave: 
 
