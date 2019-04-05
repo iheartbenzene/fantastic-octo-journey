@@ -36,6 +36,6 @@ Linux:
 
 2. Type the command apt install octave
 
-&nbsp;&nbsp; 2b. Use the command, sudo apt install octave, if you get a permissions error.
+&nbsp;&nbsp;&nbsp;&nbsp; 2b. Use the command, sudo apt install octave, if you get a permissions error.
 
 ***
