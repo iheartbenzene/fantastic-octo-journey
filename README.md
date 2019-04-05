@@ -5,11 +5,18 @@ An intelligent budget.
 An intelligent budget that would update itself with possible expected increases or decreased on recurring expenses on over the course of the next pay period. 
 
 In prorgress:
-+ Update my pay periods automatically with each new instance of gained wages. 
-+ Detail the my most/least expensive spending points. 
++ Rewriting to Mk X
++ Update pay periods automatically with each new instance of gained wages. 
++ Detail the most/least expensive spending points. 
 + Group common spending locations by geographic location.
 
+***
+
 The current prototype files are written in GNU Octave but are also readable by Matlab.
+
+To use it on yourself, add or update the files called "work_hours.txt", "work_week.txt", "bills_01.txt", "hourly_rate.txt".
+
+___
 
 To acquire GNU Octave: 
 
@@ -29,4 +36,6 @@ Linux:
 
 2. Type the command apt install octave
 
-  2b. Use the command, sudo apt install octave, if you get a permissions error.
+&nbsp;&nbsp; 2b. Use the command, sudo apt install octave, if you get a permissions error.
+
+***
