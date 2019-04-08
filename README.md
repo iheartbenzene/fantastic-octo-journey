@@ -12,9 +12,9 @@ In prorgress:
 
 ***
 
-The current prototype files are written in GNU Octave but are also readable by Matlab.
+~~The current prototype files are written in GNU Octave but are also readable by Matlab.~~
 
-To use it on yourself, add or update the files called "work_hours.txt", "work_week.txt", "bills_01.txt", "hourly_rate.txt".
+To use the Octave/Matlab edition on yourself, add or update the files called "work_hours.txt", "work_week.txt", "bills_01.txt", "hourly_rate.txt".
 
 ___
 
