@@ -12,9 +12,12 @@ In prorgress:
 
 ***
 
-~~The current prototype files are written in GNU Octave but are also readable by Matlab.~~
+There exists a prototype written in GNU Octave.
 
 To use the Octave/Matlab edition on yourself, add or update the files called "work_hours.txt", "work_week.txt", "bills_01.txt", "hourly_rate.txt".
+
+To use the notebook on yourself, insert your key value in the authentication line.
+After which, it would become possible to import your spreadsheet and have the system update automatically to perform your own analysis.
 
 ___
 
