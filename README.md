@@ -9,6 +9,7 @@ In prorgress:
 + Update pay periods automatically with each new instance of gained wages. 
 + ~~Detail the most/least expensive spending points.~~
 + ~~Group common spending locations by geographic location.~~
++ Need a better name (i.e. "cool name") for this.
 
 ***
 
