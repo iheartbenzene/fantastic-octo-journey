@@ -7,7 +7,7 @@ An intelligent budget that would update itself with possible expected increases 
 In prorgress:
 + ~~Rewriting to Mk X~~
 + Update pay periods automatically with each new instance of gained wages. 
-+ ~~Detail the most/least expensive spending points. ~~
++ ~~Detail the most/least expensive spending points.~~
 + ~~Group common spending locations by geographic location.~~
 
 ***
