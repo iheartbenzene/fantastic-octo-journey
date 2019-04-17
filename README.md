@@ -4,12 +4,6 @@ An intelligent budget.
 
 An intelligent budget that would update itself with possible expected increases or decreased on recurring expenses on over the course of the next pay period. 
 
-In prorgress:
-+ ~~Rewriting to Mk X~~
-+ Update pay periods automatically with each new instance of gained wages. 
-+ ~~Detail the most/least expensive spending points.~~
-+ ~~Group common spending locations by geographic location.~~
-
 ***
 
 There exists a prototype written in GNU Octave.
