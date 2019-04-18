@@ -1,6 +1,6 @@
 # The Intelligent Budget
 
-![build completion percentage]()
+![build completion percentage](https://i.imgur.com/XCzt7eb.png)
 
 A budgeting program to automatically track and analyze expenses.
 
