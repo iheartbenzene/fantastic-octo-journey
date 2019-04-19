@@ -1,0 +1,12 @@
+geocoder
+google
+python-google-places
+geolocation-python
+plotly
+cufflinks
+oauth2
+gspread
+oauth2client
+xgboost
+dj-database-url
+sklearn
