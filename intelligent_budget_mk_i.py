@@ -4,7 +4,6 @@ import sklearn as sk
 import matplotlib.pyplot as plt
 import math
 from math import pi
-from just_some_functions import *
 from statistics import *
 from scipy.stats import *
 import statsmodels.api as sm
