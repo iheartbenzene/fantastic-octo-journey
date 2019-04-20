@@ -84,7 +84,9 @@ from datetime import datetime
 from time import *
 from dateutil.parser import parse
 
-#Update to store keys in drive
+# Update to store keys in drive
+
+# Begin credentials
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 pi_credentials = ServiceAccountCredentials.from_json_keyfile_name('json/the intelligent budget-7edf2de93cb8.json', scope)
@@ -100,6 +102,10 @@ api_keys = ServiceAccountCredentials.from_json_keyfile_name('json/the intelligen
 api_credentials = gspread.authorize(api_keys)
 key_relations = api_credentials.open_by_key('1VuylGh-QIee1dHsWnaDoq_mVMmEtP76KZbV59qe3PCE')
 
+# End credentials
+
+# Begin loading data
+
 expense_categories = expense_related_worksheet.sheet1
 
 work_hours_categories = work_hours_related_worksheet.sheet1
@@ -109,6 +115,8 @@ keys = key_relations.sheet1
 api_key_data_frame_source = pd.DataFrame(keys.get_all_records())
 
 api_key_data_frame = api_key_data_frame_source.copy()
+
+# End loading data
 
 def perform_google_search(s):
     for search_result in search(s, tld="com", num=10, stop=5, pause=2):
@@ -121,7 +129,7 @@ def get_and_load_api_keys():
     return google_places, google_maps,
 
 
-get_and_load_api_keys()
+
 
 def get_current_location():
     current_location = geocoder.ip('me')
@@ -371,33 +379,33 @@ bars_near_me()
 
 
 # Plot Data
-def budget_image():
-    features = list(data)
-    number_of_features = len(features)
+# def budget_image():
+#     features = list(data)
+#     number_of_features = len(features)
 
-    values_for_person_one = data.iloc[0].tolist()
-    values_for_person_one += values_for_person_one[:1]
+#     values_for_person_one = data.iloc[0].tolist()
+#     values_for_person_one += values_for_person_one[:1]
 
-    values_for_person_two = data.iloc[1].tolist()
-    values_for_person_two += values_for_person_two[:1]
+#     values_for_person_two = data.iloc[1].tolist()
+#     values_for_person_two += values_for_person_two[:1]
 
-    angles = [n / float(number_of_features) * 2 * pi for n in range(number_of_features)]
-    angles += angles[:1]
+#     angles = [n / float(number_of_features) * 2 * pi for n in range(number_of_features)]
+#     angles += angles[:1]
 
-    ax = plt.subplot(111, polar = True)
+#     ax = plt.subplot(111, polar = True)
 
-    plt.xticks(angles[:-1], features)
+#     plt.xticks(angles[:-1], features)
 
-    ax.plot(angles, values_for_person_one)
-    ax.plot(angles, values_for_person_two)
+#     ax.plot(angles, values_for_person_one)
+#     ax.plot(angles, values_for_person_two)
 
-    ax.fill(angles, values_for_person_one, 'blue', alpha = 0.1)
-    axis.set_title("Person 1")
-    plt.show()
+#     ax.fill(angles, values_for_person_one, 'blue', alpha = 0.1)
+#     axis.set_title("Person 1")
+#     plt.show()
 
-    ax.fill(angles, values_for_person_two, 'red', alpha = 0.1)
-    axis.set_title("Person 2")
-    plt.show()
+#     ax.fill(angles, values_for_person_two, 'red', alpha = 0.1)
+#     axis.set_title("Person 2")
+#     plt.show()
 
 
 
@@ -475,179 +483,178 @@ def view_merchant_spending():
 
     plt.show()
 
+
+get_and_load_api_keys()
 view_merchant_spending()
 
 
-# Begin back propagation...or not since it's just a more complicated version of gradient descent
+# # Begin back propagation...or not since it's just a more complicated version of gradient descent
 
-sigma = lambda z : 1 / (1 + np.exp(-z))
-d_sigma = lambda z : np.cosh(z/2)**(-2) / 4
+# sigma = lambda z : 1 / (1 + np.exp(-z))
+# d_sigma = lambda z : np.cosh(z/2)**(-2) / 4
 
-#initialize network structure and clear past trainings
-def reset_network (n1 = 6, n2 = 7, random=np.random) :
-    global W1, W2, W3, b1, b2, b3
-    W1 = random.randn(n1, 1) / 2
-    W2 = random.randn(n2, n1) / 2
-    W3 = random.randn(2, n2) / 2
-    b1 = random.randn(n1, 1) / 2
-    b2 = random.randn(n2, 1) / 2
-    b3 = random.randn(2, 1) / 2
+# #initialize network structure and clear past trainings
+# def reset_network (n1 = 6, n2 = 7, random=np.random) :
+#     global W1, W2, W3, b1, b2, b3
+#     W1 = random.randn(n1, 1) / 2
+#     W2 = random.randn(n2, n1) / 2
+#     W3 = random.randn(2, n2) / 2
+#     b1 = random.randn(n1, 1) / 2
+#     b2 = random.randn(n2, 1) / 2
+#     b3 = random.randn(2, 1) / 2
 
-#generate the network
-def network_function(a0):
-    z1 = W1 @ a0 + b1
-    a1 = sigma(z1)
-    z2 = W2 @ a1 + b2
-    a2 = sigma(z2)
-    z3 = W3 @ a2 + b3
-    a3 = sigma(z3)
-    return a0, z1, a1, z2, a2, z3, a3
+# #generate the network
+# def network_function(a0):
+#     z1 = W1 @ a0 + b1
+#     a1 = sigma(z1)
+#     z2 = W2 @ a1 + b2
+#     a2 = sigma(z2)
+#     z3 = W3 @ a2 + b3
+#     a3 = sigma(z3)
+#     return a0, z1, a1, z2, a2, z3, a3
 
-#Cost function
-def cost(x, y) :
-    return np.linalg.norm(network_function(x)[-1] - y)**2 / x.size
+# #Cost function
+# def cost(x, y) :
+#     return np.linalg.norm(network_function(x)[-1] - y)**2 / x.size
 
-#first node
-def J_W3 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = J @ a2.T / x.size
-    return J
+# #first node
+# def J_W3 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = J @ a2.T / x.size
+#     return J
 
-def J_b3 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
+# def J_b3 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = np.sum(J, axis=1, keepdims=True) / x.size
+#     return J
 
-#second node
-def J_W2 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = J @ a1.T / x.size
-    return J
+# #second node
+# def J_W2 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = (J.T @ W3).T
+#     J = J * d_sigma(z2)
+#     J = J @ a1.T / x.size
+#     return J
 
-def J_b2 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
+# def J_b2 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = (J.T @ W3).T
+#     J = J * d_sigma(z2)
+#     J = np.sum(J, axis=1, keepdims=True) / x.size
+#     return J
 
-#third node
-def J_W1 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = (J.T @ W2).T
-    J = J * d_sigma(z1)
-    J = J @ a0.T / x.size
-    return J
+# #third node
+# def J_W1 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = (J.T @ W3).T
+#     J = J * d_sigma(z2)
+#     J = (J.T @ W2).T
+#     J = J * d_sigma(z1)
+#     J = J @ a0.T / x.size
+#     return J
 
-def J_b1 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = (J.T @ W2).T
-    J = J * d_sigma(z1)
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
-# %% markdown
-# Begin machine learning prediction MK II: SGD Classification
-# %%
-from sklearn.linear_model import SGDClassifier
+# def J_b1 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = (J.T @ W3).T
+#     J = J * d_sigma(z2)
+#     J = (J.T @ W2).T
+#     J = J * d_sigma(z1)
+#     J = np.sum(J, axis=1, keepdims=True) / x.size
+#     return J
+# # %% markdown
+# # Begin machine learning prediction MK II: SGD Classification
+# # %%
+# from sklearn.linear_model import SGDClassifier
 
-# classifier = SGDClassifier(loss="L2", penalty="none", max_iter=10)
-#L2 norm not supported
-# %% markdown
-# ###### Begin prediction MK I: gradient descent
-# %% markdown
-# Notes:
-#     Python doesn't immediately intepret the full set of dimensions for a multidimensional array if one of the the dimentions is 1.
-#      Culprit 1: So must cast as np.matrix to compensate.
-#      Culprit 2: Not able to handle very large numbers. So we can import Decimal.
-#      Culprit 3: Possibly using np.power() might bypass computational error
-#      Culprit 4: np.square also induces computational error
-#      Culprit 5: Cross products don't work since they will result in an orthogonal vector
-#      Culprit 6: np.vectorize ????
-#      Culprit 7: reduce(fxn, array)
-#      Culprit 8: Fuck it. Run without any instances of np.matrix.
-# %%
-x = np.matrix('1, 2; 3, 4; 5, 0')
-squarer = lambda t: t ** 2
-#vfunc = np.vectorize(squarer)
-#vfunc(x)
-# %%
-from functools import reduce
-def my_reduce(x, y):
-    length=len(x[0])-1
-    newY = y**2
-    # print('x',
-    # x,
-    # 'beg len',
-    # len(x[0]),
-    # 'end len',
-    # x[0][len(x[0])-1]
-    # ,'y', y)
-
-
-    # 1) component wise squaring
-    x[0].append(newY)
-    # 2) dot product for each value.
-    x[1] = x[0][length]+newY
-    # 3) delta of component wise by dot product.
-    x[2] = (x[1] - x[0][length+1])
-
-    return x
-
-print(reduce(my_reduce, [1, 2, 3], [[0],0,0]))
-# %%
-from decimal import Decimal
-from functools import reduce
-
-# def squared(x):
-#     return x**2
-
-def gradientDescent(x, y, theta, alpha, N, iterations):
-    for iter in range(iterations):
-        x_transpose = x.transpose()
-        hypothesis = np.dot(x, theta)
-        squared_errors = (hypothesis - y) **2
-        cost = squared_errors / (2 * N)
-#        print("At iteration {}, the cost is {}".format(iter, cost))
-
-        gradient = np.dot(x, squared_errors) / N
-        # update theta
-        theta = theta - alpha * gradient
-    return theta
-
-# print(type(i))
-# print(type(bills_01))
-
-# print((np.dot(i, theta) - bills_01).shape)
-# print((bills_01).shape)
-# print(np.matrix(i))
+# # classifier = SGDClassifier(loss="L2", penalty="none", max_iter=10)
+# #L2 norm not supported
+# # %% markdown
+# # ###### Begin prediction MK I: gradient descent
+# # %% markdown
+# # Notes:
+# #     Python doesn't immediately intepret the full set of dimensions for a multidimensional array if one of the the dimentions is 1.
+# #      Culprit 1: So must cast as np.matrix to compensate.
+# #      Culprit 2: Not able to handle very large numbers. So we can import Decimal.
+# #      Culprit 3: Possibly using np.power() might bypass computational error
+# #      Culprit 4: np.square also induces computational error
+# #      Culprit 5: Cross products don't work since they will result in an orthogonal vector
+# #      Culprit 6: np.vectorize ????
+# #      Culprit 7: reduce(fxn, array)
+# #      Culprit 8: Fuck it. Run without any instances of np.matrix.
+# # %%
+# x = np.matrix('1, 2; 3, 4; 5, 0')
+# squarer = lambda t: t ** 2
+# #vfunc = np.vectorize(squarer)
+# #vfunc(x)
+# # %%
+# from functools import reduce
+# def my_reduce(x, y):
+#     length=len(x[0])-1
+#     newY = y**2
+#     # print('x',
+#     # x,
+#     # 'beg len',
+#     # len(x[0]),
+#     # 'end len',
+#     # x[0][len(x[0])-1]
+#     # ,'y', y)
 
 
-N = j
-#temp_N = len(temp_i)
-# iterations = 10000
-# alpha = 0.005
+#     # 1) component wise squaring
+#     x[0].append(newY)
+#     # 2) dot product for each value.
+#     x[1] = x[0][length]+newY
+#     # 3) delta of component wise by dot product.
+#     x[2] = (x[1] - x[0][length+1])
 
-theta = np.ones(N)
-# temp_theta = np.ones(temp_N)
-theta = gradientDescent(i, bills_01, theta, alpha, j, iterations)
+#     return x
 
-# Determine the capacity for what can be done in the vein of gradient descent on cost here
-# %%
+# print(reduce(my_reduce, [1, 2, 3], [[0],0,0]))
+# # %%
+# from decimal import Decimal
+# from functools import reduce
+
+# # def squared(x):
+# #     return x**2
+
+# def gradientDescent(x, y, theta, alpha, N, iterations):
+#     for iter in range(iterations):
+#         x_transpose = x.transpose()
+#         hypothesis = np.dot(x, theta)
+#         squared_errors = (hypothesis - y) **2
+#         cost = squared_errors / (2 * N)
+# #        print("At iteration {}, the cost is {}".format(iter, cost))
+
+#         gradient = np.dot(x, squared_errors) / N
+#         # update theta
+#         theta = theta - alpha * gradient
+#     return theta
+
+# # print(type(i))
+# # print(type(bills_01))
+
+# # print((np.dot(i, theta) - bills_01).shape)
+# # print((bills_01).shape)
+# # print(np.matrix(i))
+
+
+# N = j
+# #temp_N = len(temp_i)
+# # iterations = 10000
+# # alpha = 0.005
+
+# theta = np.ones(N)
+# # temp_theta = np.ones(temp_N)
+# theta = gradientDescent(i, bills_01, theta, alpha, j, iterations)
