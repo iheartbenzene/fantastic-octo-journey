@@ -428,6 +428,7 @@ view_merchant_spending()
 
 
 
+
 ###
 # Plot Data
 # def budget_image():
