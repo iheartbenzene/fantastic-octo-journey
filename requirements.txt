@@ -16,3 +16,4 @@ sklearn
 bs4
 matplotlib
 seaborn
+statsmodels
