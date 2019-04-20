@@ -81,7 +81,7 @@ import sys
 import timeit
 import string
 from datetime import datetime
-from time import time
+from time import *
 from dateutil.parser import parse
 
 #Update to store keys in drive
