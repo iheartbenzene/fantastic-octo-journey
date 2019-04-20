@@ -1,3 +1,5 @@
+#only useful in jupyter notebook
+
 ! pip install geocoder
 ! pip install google
 ! pip install python-google-places

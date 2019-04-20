@@ -10,3 +10,9 @@ oauth2client
 xgboost
 dj-database-url
 sklearn
+numpy
+scipy
+sklearn
+bs4
+matplotlib
+seaborn
