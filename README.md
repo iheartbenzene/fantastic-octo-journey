@@ -4,8 +4,6 @@
 
 A budgeting program to automatically track and analyze expenses.
 
-~~An intelligent budget that would update itself with possible expected increases or decreased on recurring expenses on over the course of the next pay period.~~ 
-
 ***
 
 There exists a prototype written in GNU Octave.
