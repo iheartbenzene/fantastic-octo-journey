@@ -81,34 +81,10 @@ import sys
 import timeit
 import string
 from datetime import datetime
-from time import time
+from time import *
 from dateutil.parser import parse
 
-#Update to store keys in drive
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-
-pi_credentials = ServiceAccountCredentials.from_json_keyfile_name('json/the intelligent budget-7edf2de93cb8.json', scope)
-
-sojourner_credentials = gspread.authorize(pi_credentials)
-
-expense_related_worksheet = sojourner_credentials.open_by_key('1tKPle0EOUtjTcFtqLqHXcM_iPxlf3MV4RYHfi59d8k0')
-
-work_hours_related_worksheet = sojourner_credentials.open_by_key('1RdACxeor-Y4NZlmiAU1eQopvcU_I2J54KOpc2AWYfU8')
-
-key = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-api_keys = ServiceAccountCredentials.from_json_keyfile_name('json/the intelligent budget-583b0c86574c.json', key)
-api_credentials = gspread.authorize(api_keys)
-key_relations = api_credentials.open_by_key('1VuylGh-QIee1dHsWnaDoq_mVMmEtP76KZbV59qe3PCE')
-
-expense_categories = expense_related_worksheet.sheet1
-
-work_hours_categories = work_hours_related_worksheet.sheet1
-
-keys = key_relations.sheet1
-
-api_key_data_frame_source = pd.DataFrame(keys.get_all_records())
-
-api_key_data_frame = api_key_data_frame_source.copy()
+# Update to store keys in drive
 
 def perform_google_search(s):
     for search_result in search(s, tld="com", num=10, stop=5, pause=2):
@@ -120,22 +96,11 @@ def get_and_load_api_keys():
 
     return google_places, google_maps,
 
-
-get_and_load_api_keys()
-
 def get_current_location():
     current_location = geocoder.ip('me')
     latitude = current_location.latlng[0]
     longitude = current_location.latlng[1]
     return latitude, longitude
-
-expense_categories_data_frame_source = pd.DataFrame(expense_categories.get_all_records())
-expense_categories_data_frame = expense_categories_data_frame_source.copy()
-
-
-work_hours_categories_data_frame_source = pd.DataFrame(work_hours_categories.get_all_records())
-work_hours_categories_data_frame = work_hours_categories_data_frame_source.copy()
-
 
 def check_data_frame_data_type():
     print('Expense Categories: \n')
@@ -171,10 +136,6 @@ def check_work_hours_data_for_null():
 def load_all_data():
     return load_expense_data(), load_work_hours_data(), get_and_load_api_keys()
 
-
-load_all_data()
-
-
 def awaiting_next_pay_period(pay_schedule):
     # sleep(seconds per minute * minutes per hour * hours per day * days per week * weeks per period)
     if pay_schedule == 1:
@@ -193,19 +154,10 @@ def awaiting_next_pay_period(pay_schedule):
         time.sleep(60*60*24*7*4)
         wage.append(hours*rates)
 
-
-
-actual_net_salary = work_hours_categories_data_frame['actual_net_annual_salary'].apply(pd.to_numeric)
-
-
-purchase_amounts = expense_categories_data_frame['purchase_amount'].apply(pd.to_numeric, errors='coerce').fillna(0)
-
-
 def remaining_income():
     for i in purchase_amounts:
         remaining_income = actual_net_salary - purchase_amounts
         return remaining_income
-
 
 def regression_plot(x, y):
     plt.plot(x, y.T, 'rx')
@@ -223,7 +175,6 @@ def regression_plot(x, y):
     plt.ylabel('amount spent per day')
     plt.show()
 
-
 def purchase_analysis():
     #In days or number of data points
     regression_plot(range(0, len(expense_categories_data_frame['purchase_amount'])-expense_categories_data_frame['purchase_amount'].value_counts()[0]+1),
@@ -233,20 +184,10 @@ def purchase_analytics_text():
     print("With mean: {:0.4f} and standard deviation: {:0.4f} ".format(mean(purchase_amounts), stdev(purchase_amounts)))
     print("With this trend, your expenses could possibly increase to {:0.2f} at your next purchase.".format(mean(purchase_amounts)+stdev(purchase_amounts)))
 
-purchase_analysis()
-
-purchase_analytics_text()
-
-
-distances_from_home = expense_categories_data_frame['distance_from_home_vector'].apply(pd.to_numeric, errors='coerce').fillna(0)
-
-
 def determine_expense_category_value_counts_and_ranges(category):
     print(expense_categories_data_frame[category].value_counts())
     print('With overall size of: ', len(expense_categories_data_frame[category]))
     print('So end the range at, ', len(expense_categories_data_frame[category])-expense_categories_data_frame[category].value_counts()[0])
-
-
 
 def visits_by_merchant_category():
     merchant_category_frame = expense_categories_data_frame['merchant_category'][:len(expense_categories_data_frame['merchant_category'])-expense_categories_data_frame['merchant_category'].value_counts()[0]
@@ -262,7 +203,6 @@ def visits_by_merchant_name():
 
     plt.savefig('Number of Occurences by Merchant.png')
 
-
 def purchases_by_category():
     purchase_category_frame = expense_categories_data_frame['purchase_category'][:len(expense_categories_data_frame['purchase_category'])-expense_categories_data_frame['purchase_category'].value_counts()[0]
 ].value_counts()
@@ -270,22 +210,8 @@ def purchases_by_category():
 
     plt.savefig('Number of Occurences by Purchase Type.png')
 
-
 def purchases_by_distance():
     pass
-
-
-purchases_by_distance()
-
-visits_by_merchant_category()
-
-purchases_by_category()
-
-visits_by_merchant_name()
-
-
-
-google_places = GooglePlaces(api_key_data_frame['GooglePlaces'][1])
 
 def find_nearby_places():
     query_results = google_places.nearby_search(
@@ -325,8 +251,6 @@ def restaurants_near_me():
          place.get_details()
          print('%s' % (place.name))
 
-restaurants_near_me()
-
 def find_nearby_cafes():
     query_results = google_places.nearby_search(
             lat_lng={'lat': 30.184624, 'lng': -81.552726},
@@ -345,8 +269,6 @@ def cafes_near_me():
     for place in query_results.places:
          place.get_details()
          print('%s' % (place.name))
-
-cafes_near_me()
 
 def find_nearby_bars():
     query_results = google_places.nearby_search(
@@ -367,42 +289,8 @@ def bars_near_me():
          place.get_details()
          print('%s' % (place.name))
 
-bars_near_me()
-
-
-# Plot Data
-def budget_image():
-    features = list(data)
-    number_of_features = len(features)
-
-    values_for_person_one = data.iloc[0].tolist()
-    values_for_person_one += values_for_person_one[:1]
-
-    values_for_person_two = data.iloc[1].tolist()
-    values_for_person_two += values_for_person_two[:1]
-
-    angles = [n / float(number_of_features) * 2 * pi for n in range(number_of_features)]
-    angles += angles[:1]
-
-    ax = plt.subplot(111, polar = True)
-
-    plt.xticks(angles[:-1], features)
-
-    ax.plot(angles, values_for_person_one)
-    ax.plot(angles, values_for_person_two)
-
-    ax.fill(angles, values_for_person_one, 'blue', alpha = 0.1)
-    axis.set_title("Person 1")
-    plt.show()
-
-    ax.fill(angles, values_for_person_two, 'red', alpha = 0.1)
-    axis.set_title("Person 2")
-    plt.show()
-
-
-
 def view_test_budget(person, data):
-
+    
     features = ["Rent", "Water", "Power", "Entertainment", "Health Care", "Insurance: Car", "Insurance: Housing", "Else"]
     features_of_interest = len(features)
 
@@ -449,9 +337,6 @@ def view_annual_budget():
     plt.savefig("Your Annual Budget.png")
     plt.show()
 
-view_annual_budget()
-
-
 def view_merchant_spending():
 
     grouped_merchant_source = expense_categories_data_frame.groupby(['merchant_with_highest_amount']).agg({'purchase_amount': 'sum'}).reset_index()[1:]
@@ -475,179 +360,272 @@ def view_merchant_spending():
 
     plt.show()
 
+# Begin credentials
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+
+pi_credentials = ServiceAccountCredentials.from_json_keyfile_name('json/the intelligent budget-7edf2de93cb8.json', scope)
+
+sojourner_credentials = gspread.authorize(pi_credentials)
+
+expense_related_worksheet = sojourner_credentials.open_by_key('1tKPle0EOUtjTcFtqLqHXcM_iPxlf3MV4RYHfi59d8k0')
+
+work_hours_related_worksheet = sojourner_credentials.open_by_key('1RdACxeor-Y4NZlmiAU1eQopvcU_I2J54KOpc2AWYfU8')
+
+key = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+api_keys = ServiceAccountCredentials.from_json_keyfile_name('json/the intelligent budget-583b0c86574c.json', key)
+api_credentials = gspread.authorize(api_keys)
+key_relations = api_credentials.open_by_key('1VuylGh-QIee1dHsWnaDoq_mVMmEtP76KZbV59qe3PCE')
+
+# End credentials
+
+# Begin loading data
+
+expense_categories = expense_related_worksheet.sheet1
+
+work_hours_categories = work_hours_related_worksheet.sheet1
+
+keys = key_relations.sheet1
+
+api_key_data_frame_source = pd.DataFrame(keys.get_all_records())
+
+api_key_data_frame = api_key_data_frame_source.copy()
+
+expense_categories_data_frame_source = pd.DataFrame(expense_categories.get_all_records())
+expense_categories_data_frame = expense_categories_data_frame_source.copy()
+
+work_hours_categories_data_frame_source = pd.DataFrame(work_hours_categories.get_all_records())
+work_hours_categories_data_frame = work_hours_categories_data_frame_source.copy()
+
+get_and_load_api_keys()
+load_all_data()
+
+actual_net_salary = work_hours_categories_data_frame['actual_net_annual_salary'].apply(pd.to_numeric)
+purchase_amounts = expense_categories_data_frame['purchase_amount'].apply(pd.to_numeric, errors='coerce').fillna(0)
+distances_from_home = expense_categories_data_frame['distance_from_home_vector'].apply(pd.to_numeric, errors='coerce').fillna(0)
+google_places = GooglePlaces(api_key_data_frame['GooglePlaces'][1])
+
+# End loading data
+
+purchase_analysis()
+
+purchase_analytics_text()
+
+purchases_by_distance()
+
+visits_by_merchant_category()
+
+purchases_by_category()
+
+visits_by_merchant_name()
+
+restaurants_near_me()
+cafes_near_me()
+bars_near_me()
+
+view_annual_budget()
+
 view_merchant_spending()
 
 
-# Begin back propagation...or not since it's just a more complicated version of gradient descent
-
-sigma = lambda z : 1 / (1 + np.exp(-z))
-d_sigma = lambda z : np.cosh(z/2)**(-2) / 4
-
-#initialize network structure and clear past trainings
-def reset_network (n1 = 6, n2 = 7, random=np.random) :
-    global W1, W2, W3, b1, b2, b3
-    W1 = random.randn(n1, 1) / 2
-    W2 = random.randn(n2, n1) / 2
-    W3 = random.randn(2, n2) / 2
-    b1 = random.randn(n1, 1) / 2
-    b2 = random.randn(n2, 1) / 2
-    b3 = random.randn(2, 1) / 2
-
-#generate the network
-def network_function(a0):
-    z1 = W1 @ a0 + b1
-    a1 = sigma(z1)
-    z2 = W2 @ a1 + b2
-    a2 = sigma(z2)
-    z3 = W3 @ a2 + b3
-    a3 = sigma(z3)
-    return a0, z1, a1, z2, a2, z3, a3
-
-#Cost function
-def cost(x, y) :
-    return np.linalg.norm(network_function(x)[-1] - y)**2 / x.size
-
-#first node
-def J_W3 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = J @ a2.T / x.size
-    return J
-
-def J_b3 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
-
-#second node
-def J_W2 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = J @ a1.T / x.size
-    return J
-
-def J_b2 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
-
-#third node
-def J_W1 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = (J.T @ W2).T
-    J = J * d_sigma(z1)
-    J = J @ a0.T / x.size
-    return J
-
-def J_b1 (x, y) :
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = (J.T @ W2).T
-    J = J * d_sigma(z1)
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
-# %% markdown
-# Begin machine learning prediction MK II: SGD Classification
-# %%
-from sklearn.linear_model import SGDClassifier
-
-# classifier = SGDClassifier(loss="L2", penalty="none", max_iter=10)
-#L2 norm not supported
-# %% markdown
-# ###### Begin prediction MK I: gradient descent
-# %% markdown
-# Notes:
-#     Python doesn't immediately intepret the full set of dimensions for a multidimensional array if one of the the dimentions is 1.
-#      Culprit 1: So must cast as np.matrix to compensate.
-#      Culprit 2: Not able to handle very large numbers. So we can import Decimal.
-#      Culprit 3: Possibly using np.power() might bypass computational error
-#      Culprit 4: np.square also induces computational error
-#      Culprit 5: Cross products don't work since they will result in an orthogonal vector
-#      Culprit 6: np.vectorize ????
-#      Culprit 7: reduce(fxn, array)
-#      Culprit 8: Fuck it. Run without any instances of np.matrix.
-# %%
-x = np.matrix('1, 2; 3, 4; 5, 0')
-squarer = lambda t: t ** 2
-#vfunc = np.vectorize(squarer)
-#vfunc(x)
-# %%
-from functools import reduce
-def my_reduce(x, y):
-    length=len(x[0])-1
-    newY = y**2
-    # print('x',
-    # x,
-    # 'beg len',
-    # len(x[0]),
-    # 'end len',
-    # x[0][len(x[0])-1]
-    # ,'y', y)
 
 
-    # 1) component wise squaring
-    x[0].append(newY)
-    # 2) dot product for each value.
-    x[1] = x[0][length]+newY
-    # 3) delta of component wise by dot product.
-    x[2] = (x[1] - x[0][length+1])
+###
+# Plot Data
+# def budget_image():
+#     features = list(data)
+#     number_of_features = len(features)
 
-    return x
+#     values_for_person_one = data.iloc[0].tolist()
+#     values_for_person_one += values_for_person_one[:1]
 
-print(reduce(my_reduce, [1, 2, 3], [[0],0,0]))
-# %%
-from decimal import Decimal
-from functools import reduce
+#     values_for_person_two = data.iloc[1].tolist()
+#     values_for_person_two += values_for_person_two[:1]
 
-# def squared(x):
-#     return x**2
+#     angles = [n / float(number_of_features) * 2 * pi for n in range(number_of_features)]
+#     angles += angles[:1]
 
-def gradientDescent(x, y, theta, alpha, N, iterations):
-    for iter in range(iterations):
-        x_transpose = x.transpose()
-        hypothesis = np.dot(x, theta)
-        squared_errors = (hypothesis - y) **2
-        cost = squared_errors / (2 * N)
-#        print("At iteration {}, the cost is {}".format(iter, cost))
+#     ax = plt.subplot(111, polar = True)
 
-        gradient = np.dot(x, squared_errors) / N
-        # update theta
-        theta = theta - alpha * gradient
-    return theta
+#     plt.xticks(angles[:-1], features)
 
-# print(type(i))
-# print(type(bills_01))
+#     ax.plot(angles, values_for_person_one)
+#     ax.plot(angles, values_for_person_two)
 
-# print((np.dot(i, theta) - bills_01).shape)
-# print((bills_01).shape)
-# print(np.matrix(i))
+#     ax.fill(angles, values_for_person_one, 'blue', alpha = 0.1)
+#     axis.set_title("Person 1")
+#     plt.show()
+
+#     ax.fill(angles, values_for_person_two, 'red', alpha = 0.1)
+#     axis.set_title("Person 2")
+#     plt.show()
+
+# # Begin back propagation...or not since it's just a more complicated version of gradient descent
+
+# sigma = lambda z : 1 / (1 + np.exp(-z))
+# d_sigma = lambda z : np.cosh(z/2)**(-2) / 4
+
+# #initialize network structure and clear past trainings
+# def reset_network (n1 = 6, n2 = 7, random=np.random) :
+#     global W1, W2, W3, b1, b2, b3
+#     W1 = random.randn(n1, 1) / 2
+#     W2 = random.randn(n2, n1) / 2
+#     W3 = random.randn(2, n2) / 2
+#     b1 = random.randn(n1, 1) / 2
+#     b2 = random.randn(n2, 1) / 2
+#     b3 = random.randn(2, 1) / 2
+
+# #generate the network
+# def network_function(a0):
+#     z1 = W1 @ a0 + b1
+#     a1 = sigma(z1)
+#     z2 = W2 @ a1 + b2
+#     a2 = sigma(z2)
+#     z3 = W3 @ a2 + b3
+#     a3 = sigma(z3)
+#     return a0, z1, a1, z2, a2, z3, a3
+
+# #Cost function
+# def cost(x, y) :
+#     return np.linalg.norm(network_function(x)[-1] - y)**2 / x.size
+
+# #first node
+# def J_W3 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = J @ a2.T / x.size
+#     return J
+
+# def J_b3 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = np.sum(J, axis=1, keepdims=True) / x.size
+#     return J
+
+# #second node
+# def J_W2 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = (J.T @ W3).T
+#     J = J * d_sigma(z2)
+#     J = J @ a1.T / x.size
+#     return J
+
+# def J_b2 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = (J.T @ W3).T
+#     J = J * d_sigma(z2)
+#     J = np.sum(J, axis=1, keepdims=True) / x.size
+#     return J
+
+# #third node
+# def J_W1 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = (J.T @ W3).T
+#     J = J * d_sigma(z2)
+#     J = (J.T @ W2).T
+#     J = J * d_sigma(z1)
+#     J = J @ a0.T / x.size
+#     return J
+
+# def J_b1 (x, y) :
+#     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+#     J = 2 * (a3 - y)
+#     J = J * d_sigma(z3)
+#     J = (J.T @ W3).T
+#     J = J * d_sigma(z2)
+#     J = (J.T @ W2).T
+#     J = J * d_sigma(z1)
+#     J = np.sum(J, axis=1, keepdims=True) / x.size
+#     return J
+# # %% markdown
+# # Begin machine learning prediction MK II: SGD Classification
+# # %%
+# from sklearn.linear_model import SGDClassifier
+
+# # classifier = SGDClassifier(loss="L2", penalty="none", max_iter=10)
+# #L2 norm not supported
+# # %% markdown
+# # ###### Begin prediction MK I: gradient descent
+# # %% markdown
+# # Notes:
+# #     Python doesn't immediately intepret the full set of dimensions for a multidimensional array if one of the the dimentions is 1.
+# #      Culprit 1: So must cast as np.matrix to compensate.
+# #      Culprit 2: Not able to handle very large numbers. So we can import Decimal.
+# #      Culprit 3: Possibly using np.power() might bypass computational error
+# #      Culprit 4: np.square also induces computational error
+# #      Culprit 5: Cross products don't work since they will result in an orthogonal vector
+# #      Culprit 6: np.vectorize ????
+# #      Culprit 7: reduce(fxn, array)
+# #      Culprit 8: Fuck it. Run without any instances of np.matrix.
+# # %%
+# x = np.matrix('1, 2; 3, 4; 5, 0')
+# squarer = lambda t: t ** 2
+# #vfunc = np.vectorize(squarer)
+# #vfunc(x)
+# # %%
+# from functools import reduce
+# def my_reduce(x, y):
+#     length=len(x[0])-1
+#     newY = y**2
+#     # print('x',
+#     # x,
+#     # 'beg len',
+#     # len(x[0]),
+#     # 'end len',
+#     # x[0][len(x[0])-1]
+#     # ,'y', y)
 
 
-N = j
-#temp_N = len(temp_i)
-# iterations = 10000
-# alpha = 0.005
+#     # 1) component wise squaring
+#     x[0].append(newY)
+#     # 2) dot product for each value.
+#     x[1] = x[0][length]+newY
+#     # 3) delta of component wise by dot product.
+#     x[2] = (x[1] - x[0][length+1])
 
-theta = np.ones(N)
-# temp_theta = np.ones(temp_N)
-theta = gradientDescent(i, bills_01, theta, alpha, j, iterations)
+#     return x
 
-# Determine the capacity for what can be done in the vein of gradient descent on cost here
-# %%
+# print(reduce(my_reduce, [1, 2, 3], [[0],0,0]))
+# # %%
+# from decimal import Decimal
+# from functools import reduce
+
+# # def squared(x):
+# #     return x**2
+
+# def gradientDescent(x, y, theta, alpha, N, iterations):
+#     for iter in range(iterations):
+#         x_transpose = x.transpose()
+#         hypothesis = np.dot(x, theta)
+#         squared_errors = (hypothesis - y) **2
+#         cost = squared_errors / (2 * N)
+# #        print("At iteration {}, the cost is {}".format(iter, cost))
+
+#         gradient = np.dot(x, squared_errors) / N
+#         # update theta
+#         theta = theta - alpha * gradient
+#     return theta
+
+# # print(type(i))
+# # print(type(bills_01))
+
+# # print((np.dot(i, theta) - bills_01).shape)
+# # print((bills_01).shape)
+# # print(np.matrix(i))
+
+
+# N = j
+# #temp_N = len(temp_i)
+# # iterations = 10000
+# # alpha = 0.005
+
+# theta = np.ones(N)
+# # temp_theta = np.ones(temp_N)
+# theta = gradientDescent(i, bills_01, theta, alpha, j, iterations)
