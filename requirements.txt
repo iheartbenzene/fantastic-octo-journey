@@ -17,3 +17,4 @@ bs4
 matplotlib
 seaborn
 statsmodels
+tensorflow
