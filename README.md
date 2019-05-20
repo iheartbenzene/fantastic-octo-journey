@@ -2,7 +2,13 @@
 
 A budgeting program to automatically track and analyze expenses.
 
-#### Current Iteration:
+### Getting Started
+
+This project uses `python 3.7.x` and `jupyter notebooks`.
+
+Clone the repo:
+
+SSH: `git clone git@github.com:iheartbenzene/fantastic-octo-journey.git && cd fantastic-octo-journey`
 
 Load the notebook:
 + `budget_mk_X.ipynb` : https://github.com/iheartbenzene/fantastic-octo-journey/blob/master/budget_mk_X.ipynb
