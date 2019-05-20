@@ -1,6 +1,6 @@
 # The Intelligent Budget
 
-A budgeting program to automatically track and analyze expenses.
+A budgeting program to track and analyze expenses.
 
 ### Getting Started
 
