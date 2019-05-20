@@ -4,6 +4,11 @@
 
 A budgeting program to automatically track and analyze expenses.
 
+#### Current Iteration:
+
+Load the notebook:
++ `budget_mk_X.ipynb` : https://github.com/iheartbenzene/fantastic-octo-journey/blob/master/budget_mk_X.ipynb
+
 ***
 
 There exists a prototype written in GNU Octave.
