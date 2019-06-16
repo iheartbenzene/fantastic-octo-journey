@@ -37,7 +37,18 @@ or to both clone and load the notebook:
 
   jupyter notebook
   
+  budget_mk_X.ipynb
+  
 ```
+___
+Thanks to Pandas and the Google developer console, these are some of the results of the analysis.
+
+![Most Visited Merchants](https://i.imgur.com/G5OK1Zc.png)
+![Occurrences by Merchant Type](https://i.imgur.com/WxzTfIh.png)
+![Ocurrences by Purchase Type](https://i.imgur.com/52AznJf.png)
+![Ocurrences by Merchant](https://i.imgur.com/nhSnPJ3.png)
+![Annual Budget](https://i.imgur.com/FTWVyjp.png)
+___
 
 ```
 To use the notebook on yourself, insert your key value in the authentication line.
