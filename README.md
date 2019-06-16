@@ -36,10 +36,8 @@ or to both clone and load the notebook:
   cd fantastic-octo-journey
 
   jupyter notebook
-  
-  budget_mk_X.ipynb
-  
 ```
++ Click `budget_mk_X.ipynb` once the notebook has loaded.
 ___
 Thanks to Pandas and the Google developer console, these are some of the results of the analysis.
 
