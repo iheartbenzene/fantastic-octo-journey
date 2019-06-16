@@ -11,20 +11,38 @@ This project uses `python 3.7.x` and `jupyter notebooks`.
 
 + Anaconda: https://www.anaconda.com/distribution/#download-section
 
+Then select the `Pyghon 3.7 version` download link.
+
 ```
 Anaconda installs python 3.7.x as well as the jupyter notebook in one fell swoop.
+Note: It should automatically detect the operating system for Windows and Mac 
+      but might have issues with Linux; in which case manually select that tab 
+      before proceeding.
 ```
 
 ##### Clone the repo:
 
 SSH: `git clone git@github.com:iheartbenzene/fantastic-octo-journey.git && cd fantastic-octo-journey`
 
+HTTPS: `git clone https://github.com/iheartbenzene/fantastic-octo-journey.git && cd fantastic-octo-journey`
+
 Load the notebook:
 + `budget_mk_X.ipynb` : https://github.com/iheartbenzene/fantastic-octo-journey/blob/master/budget_mk_X.ipynb
 
+or to both clone and load the notebook:
+```
+  git clone git@github.com:iheartbenzene/fantastic-octo-journey.git
+
+  cd fantastic-octo-journey
+
+  jupyter notebook
+  
+```
+
 ```
 To use the notebook on yourself, insert your key value in the authentication line.
-After which, it would become possible to import your spreadsheet and have the system update automatically to perform your own analysis.
+After which, it would become possible to import your spreadsheet and have the system update 
+automatically to perform your own analysis.
 ```
 
 ***
