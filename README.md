@@ -6,21 +6,32 @@ A budgeting program to track and analyze expenses.
 
 This project uses `python 3.7.x` and `jupyter notebooks`.
 
-Clone the repo:
+
+##### To install jupyter and python 3.7.x:
+
++ Anaconda: https://www.anaconda.com/distribution/#download-section
+
+```
+Anaconda installs python 3.7.x as well as the jupyter notebook in one fell swoop.
+```
+
+##### Clone the repo:
 
 SSH: `git clone git@github.com:iheartbenzene/fantastic-octo-journey.git && cd fantastic-octo-journey`
 
 Load the notebook:
 + `budget_mk_X.ipynb` : https://github.com/iheartbenzene/fantastic-octo-journey/blob/master/budget_mk_X.ipynb
 
-***
-
-There exists a prototype written in GNU Octave.
-
-To use the Octave/Matlab edition on yourself, add or update the files called "work_hours.txt", "work_week.txt", "bills_01.txt", "hourly_rate.txt".
-
+```
 To use the notebook on yourself, insert your key value in the authentication line.
 After which, it would become possible to import your spreadsheet and have the system update automatically to perform your own analysis.
+```
+
+***
+
+There exists a prototype written in GNU Octave. However, that that was just a proof of concept and was left here mainly as a trail for anyone else who would like to follow along.
+
+To use the Octave/Matlab edition on yourself, add or update the files called "work_hours.txt", "work_week.txt", "bills_01.txt", "hourly_rate.txt".
 
 ___
 
