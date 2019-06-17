@@ -6,10 +6,11 @@ A budgeting program to track and analyze expenses.
 
 This project uses `python 3.7.x` and `jupyter notebooks`.
 
-
 ##### To install jupyter and python 3.7.x:
 
 + Anaconda: https://www.anaconda.com/distribution/#download-section
++ Pandas: https://github.com/pandas-dev/pandas or https://pandas.pydata.org/
++ Jupyter Notebook: https://jupyter.org/install
 
 Then select the `Pyghon 3.7 version` download link.
 
