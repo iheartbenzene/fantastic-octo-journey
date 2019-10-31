@@ -7,7 +7,8 @@ import sys
 # from PyQt5.QtWidgets import QApplication, QLabel, QWidget
 # from PyQt5.QtWidgets import QApplication, QHBoxLayout, QPushButton, QWidget
 # from PyQt5.QtWidgets import QApplication, QGridLayout, QPushButton, QWidget
-from PyQt5.QtWidgets import QApplication, QFormLayout, QLineEdit, QWidget
+# from PyQt5.QtWidgets import QApplication, QFormLayout, QLineEdit, QWidget
+from PyQt5.QtWidgets import QApplication, QDialog, QDialogButtonBox, QFormLayout, QVBoxLayout
 
 application = QApplication(sys.argv)
 window = QWidget()
@@ -40,14 +41,17 @@ window = QWidget()
 # layout.addWidget(QPushButton('Button 3, 1 + 3 columns span'), 3, 0, 3, 3)
 # window.setLayout(layout)
 
-window.setWindowTitle('QFormLayout')
-layout = QFormLayout()
-layout.addRow('Name: ', QLineEdit())
-layout.addRow('Age: ', QLineEdit())
-layout.addRow('Class: ', QLineEdit())
-layout.addRow('Likes: ', QLineEdit())
-layout.addRow('Dislikes: ', QLineEdit())
-window.setLayout(layout)
+# window.setWindowTitle('QFormLayout')
+# layout = QFormLayout()
+# layout.addRow('Name: ', QLineEdit())
+# layout.addRow('Age: ', QLineEdit())
+# layout.addRow('Class: ', QLineEdit())
+# layout.addRow('Likes: ', QLineEdit())
+# layout.addRow('Dislikes: ', QLineEdit())
+# window.setLayout(layout)
+# '''QLineEdit() can possibly be stored and used later'''
+
+
 
 window.show()
 sys.exit(application.exec_())
