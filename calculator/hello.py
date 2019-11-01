@@ -85,37 +85,62 @@ import sys
 
 
 
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QStatusBar, QToolBar
+# from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QStatusBar, QToolBar
 
-class Window(QMainWindow):
-    '''Main window'''
-    def __init__(self, parent = None):
+# class Window(QMainWindow):
+#     '''Main window'''
+#     def __init__(self, parent = None):
        
         
-        def __createMenu(self):
-            self.menu = self.menuBar().addMenu('&Menu')
-            self.menu.addAction('&Exit', self.close)
+#         def __createMenu(self):
+#             self.menu = self.menuBar().addMenu('&Menu')
+#             self.menu.addAction('&Exit', self.close)
             
-        def __createToolBar(self):
-            tools = QToolBar()
-            self.addToolBar(tools)
-            tools.addAction('Exit', self.close)
+#         def __createToolBar(self):
+#             tools = QToolBar()
+#             self.addToolBar(tools)
+#             tools.addAction('Exit', self.close)
             
-        def __createStatusBar(self):
-            status = QStatusBar()
-            status.showMessage('This is the status bar')
-            self.setStatusBar(status)
+#         def __createStatusBar(self):
+#             status = QStatusBar()
+#             status.showMessage('This is the status bar')
+#             self.setStatusBar(status)
         
-        '''Need to call this stuff after the functions...?'''
-        super().__init__(parent)
-        self.setWindowTitle('QMainWindow')
-        self.setCentralWidget(QLabel('This is the central widget'))
-        __createMenu(self)
-        __createToolBar(self)
-        __createStatusBar(self)
+#         '''Need to call this stuff after the functions...?'''
+#         super().__init__(parent)
+#         self.setWindowTitle('QMainWindow')
+#         self.setCentralWidget(QLabel('This is the central widget'))
+#         __createMenu(self)
+#         __createToolBar(self)
+#         __createStatusBar(self)
 
-if __name__ == '__main__':
-    application = QApplication(sys.argv)
-    main_window = Window()
-    main_window.show()
-    sys.exit(application.exec_())
+# if __name__ == '__main__':
+#     application = QApplication(sys.argv)
+#     main_window = Window()
+#     main_window.show()
+#     sys.exit(application.exec_())
+
+
+
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
+
+# widget.signal.connect(slot_function)
+
+def greeting():
+    '''slot'''
+    if message.text():
+        message.setText('')
+    else:
+        message.setText('Hello World')
+        
+application = QApplication(sys.argv)
+window = QWidget()
+window.setWindowTitle('Signals and Slots')
+layout = QVBoxLayout()
+
+button = QPushButton('Greet')
+button.clicked.connect(greeting
+layout.addWidget(message)
+window.setLayout(layout)
+window.show()
+sys.exit(application.exec_())
