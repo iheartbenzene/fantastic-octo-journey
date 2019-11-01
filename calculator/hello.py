@@ -128,10 +128,10 @@ from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWid
 
 def greeting():
     '''slot'''
-    if message.text():
-        message.setText('')
+    if msg.text():
+        msg.setText('')
     else:
-        message.setText('Hello World')
+        msg.setText('Hello World')
         
 application = QApplication(sys.argv)
 window = QWidget()
@@ -139,8 +139,8 @@ window.setWindowTitle('Signals and Slots')
 layout = QVBoxLayout()
 
 button = QPushButton('Greet')
-button.clicked.connect(greeting
-layout.addWidget(message)
+button.clicked.connect(greeting)
+layout.addWidget(msg)
 window.setLayout(layout)
 window.show()
 sys.exit(application.exec_())
