@@ -8,10 +8,10 @@ import sys
 # from PyQt5.QtWidgets import QApplication, QHBoxLayout, QPushButton, QWidget
 # from PyQt5.QtWidgets import QApplication, QGridLayout, QPushButton, QWidget
 # from PyQt5.QtWidgets import QApplication, QFormLayout, QLineEdit, QWidget
-from PyQt5.QtWidgets import QApplication, QDialog, QDialogButtonBox, QFormLayout, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QDialog, QDialogButtonBox, QFormLayout, QLineEdit, QVBoxLayout
 
-application = QApplication(sys.argv)
-window = QWidget()
+# application = QApplication(sys.argv)
+# window = QWidget()
 
 # # window.setWindowTitle('PyQt5 App')
 # window.setWindowTitle('QHBoxLayout')
@@ -52,6 +52,30 @@ window = QWidget()
 # '''QLineEdit() can possibly be stored and used later'''
 
 
+# window.show()
+# sys.exit(application.exec_())
 
-window.show()
-sys.exit(application.exec_())
+
+class Dialog(QDialog):
+    '''Dialog'''
+    def __init__(self, parent = None):
+        super().__init__(parent)
+        self.setWindowTitle('QDialog')
+        dialogue_layout = QVBoxLayout()
+        form_layout = QFormLayout()
+        form_layout.addRow('Name:', QLineEdit())
+        form_layout.addRow('Age:', QLineEdit())
+        form_layout.addRow('Class:', QLineEdit())
+        form_layout.addRow('Likes:', QLineEdit())
+        form_layout.addRow('Dislikes:', QLineEdit())
+        dialogue_layout.addLayout(form_layout)
+        buttons = QDialogButtonBox()
+        buttons.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
+        dialogue_layout.addWidget(buttons)
+        self.setLayout(dialogue_layout)
+
+if __name__ == '__main__':
+    application = QApplication(sys.argv)
+    dialogue = Dialog()
+    dialogue.show()
+    sys.exit(application.exec_())
