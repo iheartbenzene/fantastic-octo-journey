@@ -105,13 +105,13 @@ class Window(QMainWindow):
             status.showMessage('This is the status bar')
             self.setStatusBar(status)
         
+        '''Need to call this stuff after the functions...?'''
         super().__init__(parent)
         self.setWindowTitle('QMainWindow')
         self.setCentralWidget(QLabel('This is the central widget'))
         __createMenu(self)
         __createToolBar(self)
         __createStatusBar(self)
-            
 
 if __name__ == '__main__':
     application = QApplication(sys.argv)
