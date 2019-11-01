@@ -1,4 +1,5 @@
 # Filename: hello.py
+# Note to self: Migrate this to a notebook later.
 
 import sys
 
