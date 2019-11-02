@@ -149,6 +149,7 @@ import sys
 # sys.exit(application.exec_())
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+from PyQt5.QtWidgets import QGridLayout, QLineEdit, QPushButton, QVBoxLayout
 
 __version__ = '0.1.0'
 __author__ = 'Jevon K Morris'
@@ -160,8 +161,37 @@ class PyCalcUI(QMainWindow):
         self.setWindowTitle('Python Calculator')
         self.setFixedSize(655, 755)
         # Widgets
+        self.overallLayout = QVBoxLayout()
         self.__centralWidget = QWidget(self)
         self.setCentralWidget(self.__centralWidget)
+        self.__centralWidget.setLayout(self.overallLayout)
+        # Buttons and Display
+        self.__createButtons()
+        self.__createDisplay()
+        
+    def __createButtons(self):
+        self.buttons = {}
+        button_layout = QGridLayout()
+        buttons = {'7': (0, 0),
+                   '8': (0, 1),
+                   '9': (0, 2),
+                   '/': (0, 3),
+                   'C': (0, 4),
+                   '4': (1, 0),
+                   '5': (1, 1),
+                   '6': (1, 2),
+                   '*': (1, 3),
+                   '(': (1, 4),
+                   '1': (2, 0),
+                   '2': (2, 1),
+                   '3': (2, 2),
+                   '-': (2, 3),
+                   ')': (2, 4),
+                   '0': (3, 0),
+                   '00': (3, 1),
+                   '.': (3, 2),
+                   '+': (3, 3),
+                   '=': (3, 4),}
         
 def main():
     python_calculator = QApplication(sys.argv)
