@@ -150,6 +150,8 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from PyQt5.QtWidgets import QGridLayout, QLineEdit, QPushButton, QVBoxLayout
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 __version__ = '0.1.0'
 __author__ = 'Jevon K Morris'
@@ -166,8 +168,9 @@ class PyCalcUI(QMainWindow):
         self.setCentralWidget(self.__centralWidget)
         self.__centralWidget.setLayout(self.overallLayout)
         # Buttons and Display
-        self.__createButtons()
+        # Will literally be made in the order they are called.
         self.__createDisplay()
+        self.__createButtons()
         
     def __createButtons(self):
         self.buttons = {}
@@ -194,13 +197,28 @@ class PyCalcUI(QMainWindow):
                    '=': (3, 4),}
         
         for button_text, position in buttons.items():
-            self.buttons[button_text] = QPushButton[button_text]
-            self.buttons[button_text].setFixedSize(50, 50)
+            self.buttons[button_text] = QPushButton(button_text)
+            self.buttons[button_text].setFixedSize(100, 100)
             button_layout.addWidget(self.buttons[button_text], position[0], position[1])
             self.overallLayout.addLayout(button_layout)
             
+            
     def __createDisplay(self):
+        self.display = QLineEdit()
+        self.display.setFixedHeight(105)
+        self.display.setAlignment(Qt.AlignRight)
+        self.display.setReadOnly(True)
+        self.overallLayout.addWidget(self.display)
         
+    def clearDisplay(self):
+        self.setDisplayText('')
+    
+    def displayText(self):
+        return self.display.text()
+    
+    def setDisplayText(self, text):
+        self.display.setText(text)
+        self.display.setFocus()
         
 def main():
     python_calculator = QApplication(sys.argv)
