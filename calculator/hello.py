@@ -122,28 +122,52 @@ import sys
 
 
 
-from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
+# from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
 
+# # widget.signal.connect(slot_function)
 
-# widget.signal.connect(slot_function)
-
-def greeting():
-    '''slot'''
-    if msg.text():
-        msg.setText('')
-    else:
-        msg.setText('Hello World')
+# def greeting():
+#     '''slot'''
+#     if msg.text():
+#         msg.setText('')
+#     else:
+#         msg.setText('Hello World')
+# '''Note: msg.setText, i.e. QLabel, supports string formatting '''
         
-application = QApplication(sys.argv)
-window = QWidget()
-window.setWindowTitle('Signals and Slots')
-layout = QVBoxLayout()
+# application = QApplication(sys.argv)
+# window = QWidget()
+# window.setWindowTitle('Signals and Slots')
+# layout = QVBoxLayout()
 
-button = QPushButton('Greet')
-button.clicked.connect(greeting)
-layout.addWidget(button)
-msg = QLabel('')
-layout.addWidget(msg)
-window.setLayout(layout)
-window.show()
-sys.exit(application.exec_())
+# button = QPushButton('Greet')
+# button.clicked.connect(greeting)
+# layout.addWidget(button)
+# msg = QLabel('')
+# layout.addWidget(msg)
+# window.setLayout(layout)
+# window.show()
+# sys.exit(application.exec_())
+
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+
+__version__ = '0.1.0'
+__author__ = 'Jevon K Morris'
+
+class PyCalcUI(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        # Window Properties
+        self.setWindowTitle('Python Calculator')
+        self.setFixedSize(255, 355)
+        # Widgets
+        self.__centralWidget = QWidget(self)
+        self.setCentralWidget(self.__centralWidget)
+        
+def main():
+    python_calculator = QApplication(sys.argv)
+    view = PyCalcUI()
+    view.show()
+    sys.exit(python_calculator.exec_())
+    
+if __name__ = '__main__':
+    main()
