@@ -124,6 +124,7 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
 
+
 # widget.signal.connect(slot_function)
 
 def greeting():
@@ -140,6 +141,8 @@ layout = QVBoxLayout()
 
 button = QPushButton('Greet')
 button.clicked.connect(greeting)
+layout.addWidget(button)
+msg = QLabel('')
 layout.addWidget(msg)
 window.setLayout(layout)
 window.show()
