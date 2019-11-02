@@ -150,8 +150,7 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from PyQt5.QtWidgets import QGridLayout, QLineEdit, QPushButton, QVBoxLayout
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt5.QtCore import Qt
 
 from functools import partial
 
