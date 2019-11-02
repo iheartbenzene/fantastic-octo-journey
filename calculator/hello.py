@@ -193,6 +193,15 @@ class PyCalcUI(QMainWindow):
                    '+': (3, 3),
                    '=': (3, 4),}
         
+        for button_text, position in buttons.items():
+            self.buttons[button_text] = QPushButton[button_text]
+            self.buttons[button_text].setFixedSize(50, 50)
+            button_layout.addWidget(self.buttons[button_text], position[0], position[1])
+            self.overallLayout.addLayout(button_layout)
+            
+    def __createDisplay(self):
+        
+        
 def main():
     python_calculator = QApplication(sys.argv)
     view = PyCalcUI()
