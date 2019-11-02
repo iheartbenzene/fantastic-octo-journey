@@ -158,6 +158,17 @@ from functools import partial
 __version__ = '0.1.0'
 __author__ = 'Jevon K Morris'
 
+
+ERROR_MSG = 'ERROR'
+
+def evaluate_expression(expression):
+    try:
+        result = str(eval(expression, {}, {}))
+    except:
+        result = ERROR_MSG
+    return result
+
+
 class PyCalcUI(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -222,13 +233,20 @@ class PyCalcUI(QMainWindow):
         self.display.setText(text)
         self.display.setFocus()
 
-
 class PyCalcController():
-    def __init__(self, view):
+    def __init__(self, model, view):
+        self.__evaluate = model
         self.__view = view
         self.__connectSignals()
+    
+    def __calculateResult(self):
+        result = self.__evaluate(expression=self.__view.displayText())
+        self.__view.setDisplayText(result)
         
     def __buildExpression(self, sub_expression):
+        if self.__view.displayText() == ERROR_MSG:
+            self.__view.clearDisplay()
+        
         expression = self.__view.displayText() + sub_expression
         self.__view.setDisplayText(expression)
         
@@ -236,7 +254,9 @@ class PyCalcController():
         for btnText, btn in self.__view.buttons.items():
             if btnText not in {'=', 'C'}:
                 btn.clicked.connect(partial(self.__buildExpression, btnText))
-                
+        
+        self.__view.buttons['='].clicked.connect(self.__calculateResult)
+        self.__view.display.returnPressed.connect(self.__calculateResult)        
         self.__view.buttons['C'].clicked.connect(self.__view.clearDisplay)
 
         
@@ -244,7 +264,8 @@ def main():
     python_calculator = QApplication(sys.argv)
     view = PyCalcUI()
     view.show()
-    PyCalcController(view = view)
+    model = evaluate_expression
+    PyCalcController(model = model, view = view)
     sys.exit(python_calculator.exec_())
     
 if __name__ == '__main__':
