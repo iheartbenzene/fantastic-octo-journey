@@ -153,6 +153,8 @@ from PyQt5.QtWidgets import QGridLayout, QLineEdit, QPushButton, QVBoxLayout
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
+from functools import partial
+
 __version__ = '0.1.0'
 __author__ = 'Jevon K Morris'
 
@@ -219,11 +221,30 @@ class PyCalcUI(QMainWindow):
     def setDisplayText(self, text):
         self.display.setText(text)
         self.display.setFocus()
+
+
+class PyCalcController():
+    def __init__(self, view):
+        self.__view = view
+        self.__connectSignals()
+        
+    def __buildExpression(self, sub_expression):
+        expression = self.__view.displayText() + sub_expression
+        self.__view.setDisplayText(expression)
+        
+    def __connectSignals(self):
+        for btnText, btn in self.__view.buttons.items():
+            if btnText not in {'=', 'C'}:
+                btn.clicked.connect(partial(self.__buildExpression, btnText))
+                
+        self.__view.buttons['C'].clicked.connect(self.__view.clearDisplay)
+
         
 def main():
     python_calculator = QApplication(sys.argv)
     view = PyCalcUI()
     view.show()
+    PyCalcController(view = view)
     sys.exit(python_calculator.exec_())
     
 if __name__ == '__main__':
