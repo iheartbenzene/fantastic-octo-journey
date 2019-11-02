@@ -158,7 +158,7 @@ class PyCalcUI(QMainWindow):
         super().__init__()
         # Window Properties
         self.setWindowTitle('Python Calculator')
-        self.setFixedSize(255, 355)
+        self.setFixedSize(655, 755)
         # Widgets
         self.__centralWidget = QWidget(self)
         self.setCentralWidget(self.__centralWidget)
@@ -169,5 +169,5 @@ def main():
     view.show()
     sys.exit(python_calculator.exec_())
     
-if __name__ = '__main__':
+if __name__ == '__main__':
     main()
