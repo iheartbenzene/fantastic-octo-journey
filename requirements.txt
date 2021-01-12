@@ -19,3 +19,4 @@ seaborn
 statsmodels
 tensorflow
 pyqt5
+rsa>=4.7 # not directly required, pinned by Snyk to avoid a vulnerability
